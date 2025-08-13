@@ -1,0 +1,11 @@
+paolar,reyes13
+jlopez,clave123
+mrodriguez,pass456
+agarcia,abc789
+cperez,pass321
+lfernandez,clave456
+rmendoza,xyz123
+palvarez,pass789
+mmorales,clave999
+fsantos,secure123
+dnavarro,password1

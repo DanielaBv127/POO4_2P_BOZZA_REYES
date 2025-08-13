@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:text="Nuevo Comunicado"
+            android:textColor="#3F51B5"
+            android:textColorLink="#C49818"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Tipo:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="237dp"
+                android:layout_height="37dp"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/rgTipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbAnuncio"
+                        android:layout_width="120dp"
+                        android:layout_height="35dp"
+                        android:text="Anuncio" />
+
+                    <RadioButton
+                        android:id="@+id/rbEvento"
+                        android:layout_width="117dp"
+                        android:layout_height="35dp"
+                        android:text="Evento" />
+
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Área:"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/spinner_opciones_array" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:text="Audiencia:"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="109dp"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkbox_estudiantes"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:text="Estudiantes" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_profesores"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:text="Profesores" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_administrativo"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:text="Administrativo" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutEvento"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lugar del Evento:"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"/>
+
+            <EditText
+                android:id="@+id/etLugarEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingresa el lugar"
+            android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha del Evento:"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- DatePicker es un selector de fecha completo -->
+            <DatePicker
+                android:id="@+id/datePickerEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false" /> <!-- Oculta la vista de calendario completa si prefieres un selector compacto -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutAnuncio"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nivel de Urgencia:"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"/>
+
+            <Spinner
+                android:id="@+id/spUrgencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/spinner_urgencia_array" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TextV_titulo"
+                android:layout_width="98dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Título:"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_text_titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TextV_descripcion"
+                android:layout_width="98dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Descripción:"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_text_descripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Arte:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnSeleccionarImagen"
+                android:layout_width="208dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#3F51B5"
+                android:text="Adjuntar Imagen"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="153dp"
+                android:layout_height="wrap_content"
+                android:text="Nombre del arte:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_text_arte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPublicar"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#3F51B5"
+                android:text="Publicar" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btnVolver"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#3F51B5"
+                android:text="Volver" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
