@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class PublicarComunicados extends AppCompatActivity {
-
     private RadioGroup rgTipo;
     private RadioButton rbEvento, rbAnuncio;
     private Spinner spArea, spUrgencia;
@@ -23,7 +22,6 @@ public class PublicarComunicados extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publicarcomunicados);
 
-        // Referencias UI
         rgTipo = findViewById(R.id.rgTipo);
         rbEvento = findViewById(R.id.rbEvento);
         rbAnuncio = findViewById(R.id.rbAnuncio);
@@ -42,8 +40,6 @@ public class PublicarComunicados extends AppCompatActivity {
         btnPublicar = findViewById(R.id.btnPublicar);
         btnVolver = findViewById(R.id.btnVolver);
         btnSeleccionarImagen = findViewById(R.id.btnSeleccionarImagen);
-
-        // Mostrar/ocultar campos
         rgTipo.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rbEvento) {
                 layoutEvento.setVisibility(View.VISIBLE);
@@ -53,7 +49,6 @@ public class PublicarComunicados extends AppCompatActivity {
                 layoutAnuncio.setVisibility(View.VISIBLE);
             }
         });
-
         btnPublicar.setOnClickListener(v -> {
             try {
                 guardarComunicado();
@@ -83,7 +78,6 @@ public class PublicarComunicados extends AppCompatActivity {
         String descripcion = etDescripcion.getText().toString().trim();
         String imagen = etArte.getText().toString().trim();
         String audiencia = obtenerAudiencia();
-
         if (tipo.isEmpty() || titulo.isEmpty() || descripcion.isEmpty() || imagen.isEmpty() || audiencia.isEmpty()) {
             throw new DatosIncompletosException("No están todos los datos completos");
         }
@@ -95,20 +89,15 @@ public class PublicarComunicados extends AppCompatActivity {
             int mes = datePickerEvento.getMonth() + 1;
             int anio = datePickerEvento.getYear();
             String fecha = String.format("%02d/%02d/%04d", dia, mes, anio);
-
             if (lugar.isEmpty()) throw new DatosIncompletosException("Falta el lugar del evento");
-
             linea = String.format("%d, %s, %s, %s, %s, %s, %s, %s, %s\n",
                     generarId(), tipo, area, titulo, audiencia, descripcion, imagen, lugar, fecha);
-
         } else {
             String urgencia = spUrgencia.getSelectedItem() != null ? spUrgencia.getSelectedItem().toString() : "";
             if (urgencia.isEmpty()) throw new DatosIncompletosException("Falta seleccionar urgencia");
-
             linea = String.format("%d, %s, %s, %s, %s, %s, %s, %s\n",
                     generarId(), tipo, area, titulo, audiencia, descripcion, imagen, urgencia);
         }
-
         FileOutputStream fos = openFileOutput("comunicados.txt", MODE_APPEND);
         fos.write(linea.getBytes());
         fos.close();
@@ -122,7 +111,6 @@ public class PublicarComunicados extends AppCompatActivity {
         if (sb.length() > 0) sb.setLength(sb.length() - 1); // quitar último ;
         return sb.toString();
     }
-
     private int generarId() {
         return (int) (Math.random() * 1000) + 1;
     }
