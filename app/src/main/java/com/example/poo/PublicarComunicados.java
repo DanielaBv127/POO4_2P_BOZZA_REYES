@@ -90,13 +90,11 @@ public class PublicarComunicados extends AppCompatActivity {
             int anio = datePickerEvento.getYear();
             String fecha = String.format("%02d/%02d/%04d", dia, mes, anio);
             if (lugar.isEmpty()) throw new DatosIncompletosException("Falta el lugar del evento");
-            linea = String.format("%d, %s, %s, %s, %s, %s, %s, %s, %s\n",
-                    generarId(), tipo, area, titulo, audiencia, descripcion, imagen, lugar, fecha);
+            linea = String.format("%d, %s, %s, %s, %s, %s, %s, %s, %s\n", generarId(), tipo, area, titulo, audiencia, descripcion, imagen, lugar, fecha);
         } else {
             String urgencia = spUrgencia.getSelectedItem() != null ? spUrgencia.getSelectedItem().toString() : "";
             if (urgencia.isEmpty()) throw new DatosIncompletosException("Falta seleccionar urgencia");
-            linea = String.format("%d, %s, %s, %s, %s, %s, %s, %s\n",
-                    generarId(), tipo, area, titulo, audiencia, descripcion, imagen, urgencia);
+            linea = String.format("%d, %s, %s, %s, %s, %s, %s, %s\n", generarId(), tipo, area, titulo, audiencia, descripcion, imagen, urgencia);
         }
         FileOutputStream fos = openFileOutput("comunicados.txt", MODE_APPEND);
         fos.write(linea.getBytes());
