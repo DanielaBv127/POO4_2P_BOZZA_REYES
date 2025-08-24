@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">POO4_2P_BOZZA_REYES</string>
+    <string-array name="spinner_opciones_array">
+        <item>Académico</item>
+        <item>Educativo</item>
+        <item>Investigación</item>
+        <item>Vinculación</item>
+        <item>Capacitación</item>
+        <item>Deportes</item>
+        <item>Cultura</item>
+        <item>Servicios/Productos</item>
+    </string-array>
+    <string-array name="spinner_urgencia_array">
+        <item>alta</item>
+        <item>media</item>
+        <item>baja</item>
+    </string-array>
+
 </resources>
