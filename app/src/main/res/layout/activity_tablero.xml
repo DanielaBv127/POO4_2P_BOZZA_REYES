@@ -5,45 +5,41 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_weight="1"
+        android:text="Tablero Comunicados"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnOrdenar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3F51B5"
+        android:text="Ordenar por Título"
+        android:textColor="#FFFFFF" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="537dp"
         android:layout_weight="1">
 
         <TableLayout
             android:id="@+id/tablaComunicados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="0,1,2,3"/>
+            android:stretchColumns="0,1,2,3" />
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="377dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="12dp">
-
-        <Button
-            android:id="@+id/btnOrdenar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ordenar por Título"
-            android:backgroundTint="#3F51B5"
-            android:textColor="#FFFFFF"/>
-
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guardar Lista"
-            android:backgroundTint="#3F51B5"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
+        android:backgroundTint="#3F51B5"
+        android:text="Guardar Lista"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btnVolver"
