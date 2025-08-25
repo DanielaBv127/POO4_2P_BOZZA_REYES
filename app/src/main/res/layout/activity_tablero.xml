@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,45 +9,60 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="76dp"
         android:layout_weight="1"
+        android:fontFamily="@font/balsamiq_sans_bold"
         android:text="Tablero Comunicados"
+        android:textColor="#002576"
+        android:textSize="24sp"
         android:textStyle="bold" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
     <Button
         android:id="@+id/btnOrdenar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#3F51B5"
+        android:backgroundTint="#002576"
+        android:fontFamily="@font/balsamiq_sans"
         android:text="Ordenar por Título"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="537dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:backgroundTint="@color/material_dynamic_primary10"
+        android:foregroundTint="@color/material_dynamic_primary10">
 
         <TableLayout
             android:id="@+id/tablaComunicados"
+            android:fontFamily="@font/balsamiq_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="0,1,2,3" />
+            android:stretchColumns="0,1" />
     </ScrollView>
 
     <Button
         android:id="@+id/btnGuardar"
-        android:layout_width="377dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#3F51B5"
+        android:backgroundTint="#002576"
+        android:fontFamily="@font/balsamiq_sans"
+        android:foregroundTint="@color/material_dynamic_primary10"
         android:text="Guardar Lista"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnVolver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#002576"
+        android:fontFamily="@font/balsamiq_sans"
         android:text="Volver"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#3F51B5"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 </LinearLayout>

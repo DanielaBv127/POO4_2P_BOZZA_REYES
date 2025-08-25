@@ -36,7 +36,6 @@ public class PublicarComunicados extends AppCompatActivity {
         etTitulo = findViewById(R.id.edit_text_titulo);
         etDescripcion = findViewById(R.id.edit_text_descripcion);
         etLugar = findViewById(R.id.etLugarEvento);
-        etArte = findViewById(R.id.edit_text_arte);
         datePickerEvento = findViewById(R.id.datePickerEvento);
         layoutEvento = findViewById(R.id.layoutEvento);
         layoutAnuncio = findViewById(R.id.layoutAnuncio);
@@ -75,7 +74,7 @@ public class PublicarComunicados extends AppCompatActivity {
             if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
                 imagenUri = data.getData();
                 if (imagenUri != null) {
-                    etArte.setText(imagenUri.toString()); // 👈 guardamos la URI en el EditText
+                    etArte.setText(imagenUri.toString());
                 }
             }
         }

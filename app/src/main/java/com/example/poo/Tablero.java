@@ -1,6 +1,7 @@
 package com.example.poo;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -40,7 +41,7 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
         mostrarComunicados();
 
         btnOrdenar.setOnClickListener(v -> {
-            comunicados.sort(Comparator.comparing(c -> c[3])); // ordena por título
+            comunicados.sort(Comparator.comparing(c -> c[3]));
             mostrarComunicados();
         });
 
@@ -66,14 +67,40 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
 
     private void mostrarComunicados() {
         tabla.removeAllViews();
+        TableRow header = new TableRow(this);
+
+        TextView thTitulo = new TextView(this);
+        thTitulo.setText("Título");
+        thTitulo.setTypeface(null, Typeface.BOLD);
+        thTitulo.setPadding(16, 8, 16, 8);
+        header.addView(thTitulo);
+
+        TextView thFecha = new TextView(this);
+        thFecha.setText("Fecha");
+        thFecha.setTypeface(null, Typeface.BOLD);
+        thFecha.setPadding(16, 8, 16, 8);
+        header.addView(thFecha);
+
+        tabla.addView(header);
+
         for (String[] c : comunicados) {
             TableRow fila = new TableRow(this);
-            for (String dato : c) {
-                TextView tv = new TextView(this);
-                tv.setText(dato.trim());
-                tv.setPadding(8, 8, 8, 8);
-                fila.addView(tv);
+
+            TextView tvTitulo = new TextView(this);
+            tvTitulo.setText(c[3].trim());
+            tvTitulo.setPadding(16, 8, 16, 8);
+            fila.addView(tvTitulo);
+
+            TextView tvFecha = new TextView(this);
+            String fecha = "";
+            if (c[1].equalsIgnoreCase("evento") && c.length >= 9) {
+                fecha = c[8].trim();
+            } else {
+                fecha = "--";
             }
+            tvFecha.setText(fecha);
+            tvFecha.setPadding(16, 8, 16, 8);
+            fila.addView(tvFecha);
             tabla.addView(fila);
         }
     }

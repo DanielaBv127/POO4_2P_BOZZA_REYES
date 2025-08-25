@@ -2,5 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/andika_new_basic</item>
+        <item>@font/baloo</item>
+        <item>@font/balsamiq_sans</item>
+        <item>@font/balsamiq_sans_bold</item>
     </array>
 </resources>
