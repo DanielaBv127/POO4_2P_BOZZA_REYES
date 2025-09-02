@@ -2,6 +2,7 @@ package com.example.poo;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,124 +17,143 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VerComunicados extends AppCompatActivity {
-    private Spinner spinnerFechas;
     private LinearLayout layoutComunicados;
     private Button btnVolver;
+    private Spinner spinnerFechas;
 
-    private ArrayList<String[]> listaComunicados= new ArrayList<>();
-    private ArrayList<String> listaFechas= new ArrayList<>();
+    private List<String[]> comunicados= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vercomunicados);
 
-        spinnerFechas= findViewById(R.id.spinnerFechas);
         layoutComunicados = findViewById(R.id.layoutComunicados);
         btnVolver = findViewById(R.id.btnVolver);
+        spinnerFechas= findViewById(R.id.spinnerFechas);
 
         cargarComunicados();
+        cargarFechas();
+        mostrarComunicados(comunicados);
 
-        for (String[] datos : listaComunicados) {
-            if (datos.length > 8) {
-                if (datos[1].trim().equalsIgnoreCase("evento")) {
-                    String fecha = datos[8].trim();
-                    if (!listaFechas.contains(fecha)) {
-                        listaFechas.add(fecha);
-                    }
+        spinnerFechas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String fechaSeleccionada= parent.getItemAtPosition(position).toString();
+                if (fechaSeleccionada.equals("Todos")){
+                    mostrarComunicados(comunicados);
+                }else{
+                    filtrarPorFecha(fechaSeleccionada);
                 }
             }
-        }
 
-        if (!listaFechas.isEmpty()){
-            ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaFechas);
-            spinnerFechas.setAdapter(adapter);
-            spinnerFechas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-                    String fechaSeleccionada= listaFechas.get(position);
-                    mostrarComunicadosPorFecha(fechaSeleccionada);
-                }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent){
-
-                }
-            });
-        }
+            }
+        });
 
         btnVolver.setOnClickListener(v -> finish());
-
-        mostrarComunicados(listaComunicados);
     }
 
-    private void cargarComunicados(){
-        listaComunicados.clear();
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput("comunicados.txt")));
+    private void cargarComunicados() {
+        comunicados.clear();
+        try (FileInputStream fis = openFileInput("comunicados.txt");
+             BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
+
             String linea;
             while ((linea = br.readLine()) != null) {
-                if (!linea.trim().isEmpty()) {
-                    String[] datos = linea.split(",");
-                    for (int i = 0; i < datos.length; i++) {
-                        datos[i] = datos[i].trim();
-                    }
-                    listaComunicados.add(datos);
+                String[] partes = linea.split(",");
+                if (partes.length >= 7) {
+                    comunicados.add(partes);
                 }
             }
-            br.close();
         } catch (Exception e) {
-            Toast.makeText(this, "No hay comunicados aún", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No se encontraron comunicados", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void mostrarComunicados(ArrayList<String[]> comunicados) {
-        layoutComunicados.removeAllViews();
-
-        for (String[] datos : comunicados) {
-            String tipo = datos[1];
-            String titulo = datos[3];
-            String descripcion = datos[5];
-            String imagen = datos[6];
-
-            // Título
-            TextView tvTitulo = new TextView(this);
-            tvTitulo.setText(titulo + " (" + tipo + ")");
-            tvTitulo.setTextSize(20f);
-            tvTitulo.setTypeface(null, Typeface.BOLD);
-            layoutComunicados.addView(tvTitulo);
-
-            // Imagen
-            ImageView img = new ImageView(this);
-            int resId = getResources().getIdentifier(imagen, "drawable", getPackageName());
-            if (resId != 0) {
-                img.setImageResource(resId);
+    private void cargarFechas(){
+        List<String> opciones= new ArrayList<>();
+        opciones.add("Todos");
+        for (String[] c: comunicados){
+            if (c[1].trim().equalsIgnoreCase("evento") && c.length>=9){
+                String fecha= c[8].trim();
+                if (!opciones.contains(fecha)){
+                    opciones.add(fecha);
+                }
             }
-            layoutComunicados.addView(img);
+        }
 
-            // Descripción
-            TextView tvDesc = new TextView(this);
-            tvDesc.setText(descripcion);
-            layoutComunicados.addView(tvDesc);
+        ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFechas.setAdapter(adapter);
+    }
+
+    private void mostrarComunicados(List<String[]> lista){
+        layoutComunicados.removeAllViews();
+        for (String[] c: lista){
+            String titulo= c[3].trim();
+            String descripcion= c[5].trim();
+            String imagen= c[6].trim();
+
+            agregarCard(titulo,descripcion,imagen);
         }
     }
 
-    private void mostrarComunicadosPorFecha(String fecha){
-        ArrayList<String[]> filtrados= new ArrayList<>();
-        for (String[] datos: listaComunicados){
-            if (datos.length>8){
-                if (datos[1].equalsIgnoreCase("evento") && datos[8].equals(fecha)){
-                    filtrados.add(datos);
+    private void filtrarPorFecha(String fecha){
+        List<String[]> filtrados= new ArrayList<>();
+        for (String[] c: comunicados){
+            if (c[1].trim().equalsIgnoreCase("evento") && c.length>=9){
+                String fechaEvento= c[8].trim();
+                if (fechaEvento.equals(fecha)){
+                    filtrados.add(c);
                 }
             }
         }
         mostrarComunicados(filtrados);
+    }
+
+    private void agregarCard(String titulo, String descripcion, String nombreImagen){
+        LinearLayout card= new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setPadding(20,20,20,20);
+
+        //Título
+        TextView tvTitulo= new TextView(this);
+        tvTitulo.setText(titulo);
+        tvTitulo.setTextSize(18f);
+        tvTitulo.setTypeface(null, Typeface.BOLD);
+
+        //Imagen
+        ImageView img= new ImageView(this);
+        try{
+            Uri uri= Uri.parse(nombreImagen);
+            img.setImageURI(uri);
+        }catch (Exception e){
+            img.setImageResource(android.R.drawable.ic_menu_report_image);
+        }
+        img.setAdjustViewBounds(true);
+        img.setMaxHeight(400);
+
+        //Descripción
+        TextView tvDesc= new TextView(this);
+        tvDesc.setText(descripcion);
+
+        card.addView(tvTitulo);
+        card.addView(img);
+        card.addView(tvDesc);
+
+        layoutComunicados.addView(card);
     }
 }

@@ -2,6 +2,7 @@ package com.example.poo;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,7 @@ public class PublicarComunicados extends AppCompatActivity {
     private RadioButton rbEvento, rbAnuncio;
     private Spinner spArea, spUrgencia;
     private CheckBox cbEstudiantes, cbProfesores, cbAdministrativo;
-    private EditText etTitulo, etDescripcion, etLugar, etArte;
+    private EditText etTitulo, etDescripcion, etLugar;
     private DatePicker datePickerEvento;
     private LinearLayout layoutEvento, layoutAnuncio;
     private Button btnPublicar, btnVolver, btnSeleccionarImagen;
@@ -66,6 +67,11 @@ public class PublicarComunicados extends AppCompatActivity {
             startActivity(new Intent(this, MenuActivity.class));
             finish();
         });
+
+        btnSeleccionarImagen.setOnClickListener(v -> {
+            Intent intent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        });
     }
 
         @Override
@@ -74,7 +80,7 @@ public class PublicarComunicados extends AppCompatActivity {
             if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
                 imagenUri = data.getData();
                 if (imagenUri != null) {
-                    etArte.setText(imagenUri.toString());
+                    Toast.makeText(this, "Imagen seleccionada", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -84,7 +90,7 @@ public class PublicarComunicados extends AppCompatActivity {
         String area = spArea.getSelectedItem() != null ? spArea.getSelectedItem().toString() : "";
         String titulo = etTitulo.getText().toString().trim();
         String descripcion = etDescripcion.getText().toString().trim();
-        String imagen = etArte.getText().toString().trim();
+        String imagen = (imagenUri != null) ? imagenUri.toString() : "";
         String audiencia = obtenerAudiencia();
         if (tipo.isEmpty() || titulo.isEmpty() || descripcion.isEmpty() || imagen.isEmpty() || audiencia.isEmpty()) {
             throw new DatosIncompletosException("No están todos los datos completos");
