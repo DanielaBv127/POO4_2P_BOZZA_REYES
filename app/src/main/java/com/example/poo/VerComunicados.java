@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -140,6 +141,8 @@ public class VerComunicados extends AppCompatActivity {
         tvTitulo.setTextSize(18f);
         tvTitulo.setTypeface(null, Typeface.BOLD);
         tvTitulo.setPadding(0,0,0,30);
+        tvTitulo.setGravity(Gravity.CENTER_HORIZONTAL);
+
 
         //Imagen
         ImageView img= new ImageView(this);
