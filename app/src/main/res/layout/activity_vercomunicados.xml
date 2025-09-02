@@ -25,16 +25,18 @@
             android:layout_height="wrap_content"
             android:text="Ver Comunicados"
             android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom= "16dp"/>
 
         <Spinner
             android:id="@+id/spinnerFechas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="517dp">
+            android:layout_height="583dp">
 
             <LinearLayout
                 android:id="@+id/layoutComunicados"

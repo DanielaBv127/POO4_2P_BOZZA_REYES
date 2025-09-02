@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -129,11 +130,16 @@ public class VerComunicados extends AppCompatActivity {
         card.setOrientation(LinearLayout.VERTICAL);
         card.setPadding(20,20,20,20);
 
+        LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,30);
+        card.setLayoutParams(params);
+
         //Título
         TextView tvTitulo= new TextView(this);
         tvTitulo.setText(titulo);
         tvTitulo.setTextSize(18f);
         tvTitulo.setTypeface(null, Typeface.BOLD);
+        tvTitulo.setPadding(0,0,0,30);
 
         //Imagen
         ImageView img= new ImageView(this);
@@ -143,12 +149,15 @@ public class VerComunicados extends AppCompatActivity {
         }catch (Exception e){
             img.setImageResource(android.R.drawable.ic_menu_report_image);
         }
+        img.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         img.setAdjustViewBounds(true);
-        img.setMaxHeight(400);
+        img.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         //Descripción
         TextView tvDesc= new TextView(this);
         tvDesc.setText(descripcion);
+        tvDesc.setPadding(0,30,0,0);
+        tvDesc.setLineSpacing(0,1.5f);
 
         card.addView(tvTitulo);
         card.addView(img);

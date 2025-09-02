@@ -69,7 +69,11 @@ public class PublicarComunicados extends AppCompatActivity {
         });
 
         btnSeleccionarImagen.setOnClickListener(v -> {
-            Intent intent= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent intent= new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setType("image/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
         });
     }
@@ -80,6 +84,7 @@ public class PublicarComunicados extends AppCompatActivity {
             if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
                 imagenUri = data.getData();
                 if (imagenUri != null) {
+                    getContentResolver().takePersistableUriPermission(imagenUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     Toast.makeText(this, "Imagen seleccionada", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -119,7 +124,9 @@ public class PublicarComunicados extends AppCompatActivity {
 
     private String obtenerAudiencia() {
         StringBuilder sb = new StringBuilder();
-        if (cbEstudiantes.isChecked()) sb.append("Estudiantes;");
+        if (cbEstudiantes.isChecked()) {
+            sb.append("Estudiantes;");
+        }
         if (cbProfesores.isChecked()) sb.append("Profesores;");
         if (cbAdministrativo.isChecked()) sb.append("Administrativo;");
         if (sb.length() > 0) sb.setLength(sb.length() - 1);
