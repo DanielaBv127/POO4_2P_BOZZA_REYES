@@ -33,7 +33,7 @@ public class VerComunicados extends AppCompatActivity {
     private Button btnVolver;
     private Spinner spinnerFechas;
 
-    private List<String[]> comunicados= new ArrayList<>();
+    private List<Comunicado> comunicados= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,21 @@ public class VerComunicados extends AppCompatActivity {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
-                if (partes.length >= 7) {
-                    comunicados.add(partes);
+
+                Comunicado c = null;
+                // Evento
+                if (partes[1].trim().equalsIgnoreCase("evento") && partes.length >= 9) {
+                    c = new Comunicado(Integer.parseInt(partes[0].trim()), partes[1].trim(), partes[2].trim(), partes[3].trim(), partes[4].trim(), partes[5].trim(), partes[6].trim(),
+                            partes[7].trim(),partes[8].trim(),null);
+                }
+                // Anuncio
+                else if (partes[1].trim().equalsIgnoreCase("anuncio") && partes.length >= 8) {
+                    c = new Comunicado(Integer.parseInt(partes[0].trim()), partes[1].trim(), partes[2].trim(), partes[3].trim(), partes[4].trim(),
+                            partes[5].trim(), partes[6].trim(), null, null, partes[7].trim());
+                }
+
+                if (c != null) {
+                    comunicados.add(c);
                 }
             }
         } catch (Exception e) {
@@ -88,10 +101,10 @@ public class VerComunicados extends AppCompatActivity {
     private void cargarFechas(){
         List<String> opciones= new ArrayList<>();
         opciones.add("Todos");
-        for (String[] c: comunicados){
-            if (c[1].trim().equalsIgnoreCase("evento") && c.length>=9){
-                String fecha= c[8].trim();
-                if (!opciones.contains(fecha)){
+        for (Comunicado c: comunicados){
+            if (c!= null && "evento".equalsIgnoreCase(c.getTipo())){
+                String fecha= c.getFecha()!= null ? c.getFecha().trim(): "";
+                if (!fecha.isEmpty() && !opciones.contains(fecha)){
                     opciones.add(fecha);
                 }
             }
@@ -102,28 +115,32 @@ public class VerComunicados extends AppCompatActivity {
         spinnerFechas.setAdapter(adapter);
     }
 
-    private void mostrarComunicados(List<String[]> lista){
+    private void mostrarComunicados(List<Comunicado> lista){
         layoutComunicados.removeAllViews();
-        for (String[] c: lista){
-            String titulo= c[3].trim();
-            String descripcion= c[5].trim();
-            String imagen= c[6].trim();
-
-            agregarCard(titulo,descripcion,imagen);
+        for (Comunicado c: lista){
+            agregarCard(c.getTitulo(), c.getDescripcion(),c.getImagen());
         }
     }
 
     private void filtrarPorFecha(String fecha){
-        List<String[]> filtrados= new ArrayList<>();
-        for (String[] c: comunicados){
-            if (c[1].trim().equalsIgnoreCase("evento") && c.length>=9){
-                String fechaEvento= c[8].trim();
-                if (fechaEvento.equals(fecha)){
+        List<Comunicado> filtrados= new ArrayList<>();
+        for (Comunicado c: comunicados){
+            if (c!=null && "evento".equalsIgnoreCase(c.getTipo()) && c.getFecha()!=null){
+                if (c.getFecha().trim().equals(fecha)){
                     filtrados.add(c);
                 }
             }
         }
+
+        if (filtrados.isEmpty()){
+            layoutComunicados.removeAllViews();
+            TextView tv= new TextView(this);
+            tv.setText("No hay eventos para la fecha seleccionada.");
+            tv.setPadding(20,20,20,20);
+            layoutComunicados.addView(tv);
+        } else{
         mostrarComunicados(filtrados);
+        }
     }
 
     private void agregarCard(String titulo, String descripcion, String nombreImagen){

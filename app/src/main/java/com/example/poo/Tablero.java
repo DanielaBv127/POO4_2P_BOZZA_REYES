@@ -3,6 +3,7 @@ package com.example.poo;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -18,14 +19,17 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Tablero extends AppCompatActivity {private TableLayout tabla;
+public class Tablero extends AppCompatActivity {
+
+    private TableLayout tabla;
     private Button btnOrdenar, btnGuardar, btnVolver;
-    private List<String[]> comunicados = new ArrayList<>();
+    private List<Comunicado> comunicados = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,7 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
         mostrarComunicados();
 
         btnOrdenar.setOnClickListener(v -> {
-            comunicados.sort(Comparator.comparing(c -> c[3]));
+            Collections.sort(comunicados);
             mostrarComunicados();
         });
 
@@ -54,11 +58,29 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
     }
 
     private void cargarComunicados() {
+        comunicados.clear();
         try (FileInputStream fis = openFileInput("comunicados.txt");
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
+
             String linea;
             while ((linea = reader.readLine()) != null) {
-                comunicados.add(linea.split(","));
+                String[] partes = linea.split(",");
+
+                Comunicado comunicado = null;
+                // Evento
+                if (partes[1].trim().equalsIgnoreCase("evento") && partes.length >= 9) {
+                    comunicado = new Comunicado(Integer.parseInt(partes[0].trim()), partes[1].trim(), partes[2].trim(), partes[3].trim(),
+                            partes[4].trim(), partes[5].trim(), partes[6].trim(), partes[7].trim(), partes[8].trim(), null);
+                }
+                // Anuncio
+                else if (partes[1].trim().equalsIgnoreCase("anuncio") && partes.length >= 8) {
+                    comunicado = new Comunicado(Integer.parseInt(partes[0].trim()), partes[1].trim(), partes[2].trim(), partes[3].trim(), partes[4].trim(),
+                            partes[5].trim(), partes[6].trim(), null, null, partes[7].trim());
+                }
+
+                if (comunicado != null) {
+                    comunicados.add(comunicado);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,6 +89,8 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
 
     private void mostrarComunicados() {
         tabla.removeAllViews();
+
+        // Cabecera
         TableRow header = new TableRow(this);
 
         TextView thTitulo = new TextView(this);
@@ -83,24 +107,24 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
 
         tabla.addView(header);
 
-        for (String[] c : comunicados) {
+        // Filas con datos
+        for (Comunicado c : comunicados) {
             TableRow fila = new TableRow(this);
 
             TextView tvTitulo = new TextView(this);
-            tvTitulo.setText(c[3].trim());
+            tvTitulo.setText(c.getTitulo());
             tvTitulo.setPadding(16, 8, 16, 8);
             fila.addView(tvTitulo);
 
             TextView tvFecha = new TextView(this);
-            String fecha = "";
-            if (c[1].equalsIgnoreCase("evento") && c.length >= 9) {
-                fecha = c[8].trim();
-            } else {
-                fecha = "--";
+            String fecha = "--";
+            if ("evento".equalsIgnoreCase(c.getTipo()) && c.getFecha() != null) {
+                fecha = c.getFecha().trim();
             }
             tvFecha.setText(fecha);
             tvFecha.setPadding(16, 8, 16, 8);
             fila.addView(tvFecha);
+
             tabla.addView(fila);
         }
     }
@@ -111,7 +135,7 @@ public class Tablero extends AppCompatActivity {private TableLayout tabla;
             String nombreArchivo = "comunicados_" + fecha + ".dat";
             FileOutputStream fos = openFileOutput(nombreArchivo, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(comunicados);
+            oos.writeObject(new ArrayList<>(comunicados));
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
