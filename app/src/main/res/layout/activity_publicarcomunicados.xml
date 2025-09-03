@@ -319,7 +319,7 @@
 
             <Button
                 android:id="@+id/btnPublicar"
-                android:layout_width="149dp"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#E63692"
                 android:fontFamily="@font/balsamiq_sans"
@@ -332,7 +332,7 @@
 
             <Button
                 android:id="@+id/btnVolver"
-                android:layout_width="149dp"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#E63692"
                 android:fontFamily="@font/balsamiq_sans"
