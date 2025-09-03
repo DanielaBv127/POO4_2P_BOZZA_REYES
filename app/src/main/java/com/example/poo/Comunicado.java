@@ -28,7 +28,7 @@ public class Comunicado implements Comparable<Comunicado>, Serializable {
     }
 
     // Getters
-    public String getTitulo() { return titulo; }
+    public String getTitulo() {return titulo;}
     public String getDescripcion() { return descripcion; }
     public String getImagen() { return imagen; }
     public String getFecha() { return fecha; }
