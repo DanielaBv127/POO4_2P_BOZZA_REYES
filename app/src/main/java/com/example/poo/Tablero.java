@@ -3,7 +3,6 @@ package com.example.poo;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
