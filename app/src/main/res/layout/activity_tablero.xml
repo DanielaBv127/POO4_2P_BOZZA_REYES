@@ -13,12 +13,13 @@
         android:layout_weight="1"
         android:fontFamily="@font/balsamiq_sans_bold"
         android:text="Tablero Comunicados"
-        android:textColor="#CE156F"
+        android:textColor="#971952"
         android:textSize="29sp"
         android:textStyle="bold" />
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="15dp" />
 
     <Button
         android:id="@+id/btnOrdenar"

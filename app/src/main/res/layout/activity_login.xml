@@ -35,7 +35,7 @@
             android:fontFamily="@font/balsamiq_sans_bold"
             android:gravity="center"
             android:text="Iniciar Sesión"
-            android:textColor="#CE156F"
+            android:textColor="#971952"
             android:textColorLink="#E63692"
             android:textSize="34sp"
             android:textStyle="bold"
