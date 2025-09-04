@@ -31,14 +31,14 @@
 
             <TextView
                 android:id="@+id/textView10"
-                android:layout_width="95dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Tipo:"
                 android:textColor="#140A0A"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -87,6 +87,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Área:"
+                android:textSize="16sp"
                 android:textColor="#140A0A"
                 android:textStyle="bold" />
 
@@ -119,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Audiencia:"
+                android:textSize="16sp"
                 android:textColor="#140A0A"
                 android:textStyle="bold" />
 
@@ -158,28 +160,33 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/TV_lugarevento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Lugar del Evento:"
-                android:textSize="16sp"
-                android:fontFamily="@font/balsamiq_sans"
-                android:layout_marginTop="8dp"/>
+                android:textColor="#140A0A"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/etLugarEvento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/balsamiq_sans"
-            android:hint="Ingresa el lugar"
-            android:inputType="text" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/balsamiq_sans"
+                android:hint="Ingresa el lugar"
+                android:textSize="16sp"
+                android:inputType="text" />
 
             <TextView
+                android:id="@+id/TV_fechaevento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Fecha del Evento:"
-                android:fontFamily="@font/balsamiq_sans"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"/>
+                android:textColor="#140A0A"
+                android:textSize="16sp" />
 
             <DatePicker
                 android:id="@+id/datePickerEvento"
@@ -200,6 +207,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nivel de Urgencia:"
+                android:textColor="#140A0A"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"/>
 
@@ -225,6 +234,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Título:"
+                android:textSize="16sp"
                 android:textColor="#140A0A"
                 android:textStyle="bold" />
 
@@ -259,6 +269,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Descripción:"
+                android:textSize="16sp"
                 android:textColor="#140A0A"
                 android:textStyle="bold" />
 
@@ -294,7 +305,7 @@
                 android:fontFamily="@font/balsamiq_sans_bold"
                 android:text="Arte:"
                 android:textColor="#140A0A"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <Button
@@ -305,7 +316,8 @@
                 android:backgroundTint="#E63692"
                 android:fontFamily="@font/balsamiq_sans"
                 android:text="Adjuntar Imagen"
-                android:textSize="15dp" />
+                app:rippleColor="#6430F2"
+                android:textSize="16dp" />
         </LinearLayout>
 
         <Space
@@ -324,7 +336,8 @@
                 android:backgroundTint="#E63692"
                 android:fontFamily="@font/balsamiq_sans"
                 android:text="Publicar"
-                android:textSize="15dp" />
+                app:rippleColor="#6430F2"
+                android:textSize="17dp" />
 
             <Space
                 android:layout_width="10dp"
@@ -337,7 +350,7 @@
                 android:backgroundTint="#E63692"
                 android:fontFamily="@font/balsamiq_sans"
                 android:text="Volver"
-                android:textSize="15dp"
+                android:textSize="17dp"
                 app:rippleColor="#6430F2" />
         </LinearLayout>
 

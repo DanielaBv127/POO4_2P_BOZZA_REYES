@@ -9,8 +9,7 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/balsamiq_sans_bold"
         android:text="Tablero Comunicados"
         android:textColor="#971952"
@@ -19,7 +18,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="15dp" />
+        android:layout_height="10dp" />
 
     <Button
         android:id="@+id/btnOrdenar"
@@ -29,21 +28,30 @@
         android:fontFamily="@font/balsamiq_sans"
         android:text="Ordenar por Título"
         android:textColor="#FFFFFF"
+        app:rippleColor="#6430F2"
         android:textSize="16sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="537dp"
+        android:layout_height="555dp"
         android:layout_weight="1"
         android:backgroundTint="@color/material_dynamic_primary10"
         android:foregroundTint="@color/material_dynamic_primary10">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal">
 
         <TableLayout
             android:id="@+id/tablaComunicados"
             android:fontFamily="@font/balsamiq_sans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="0,1" />
+            android:stretchColumns="0,1"
+            android:divider="@android:color/darker_gray"
+            android:showDividers="middle"
+            android:dividerHeight="1dp"/>
+        </HorizontalScrollView>
     </ScrollView>
 
     <Button
@@ -54,6 +62,7 @@
         android:fontFamily="@font/balsamiq_sans"
         android:foregroundTint="@color/material_dynamic_primary10"
         android:text="Guardar Lista"
+        app:rippleColor="#6430F2"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
@@ -64,6 +73,7 @@
         android:backgroundTint="#E63692"
         android:fontFamily="@font/balsamiq_sans"
         android:text="Volver"
+        app:rippleColor="#6430F2"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 </LinearLayout>

@@ -1,5 +1,4 @@
 package com.example.poo;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -7,6 +6,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,17 +19,39 @@ import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+/**
+ * La clase {@code Tablero} representa la vista donde se listan los comunicados
+ * previamente publicados. Permite al usuario:
+ * <ul>
+ *     <li>Visualizar en una tabla los comunicados (eventos y anuncios).</li>
+ *     <li>Ordenar los comunicados (según el criterio definido en la clase {@link Comunicado}).</li>
+ *     <li>Guardar los comunicados en un archivo serializado (.dat).</li>
+ *     <li>Regresar al menú principal.</li>
+ * </ul>
+ *
+ * <p>Los comunicados se cargan desde un archivo de texto plano {@code comunicados.txt}
+ * generado por {@link PublicarComunicados}, y se muestran con su título y fecha.</p>
+ *
+ * @author Paola Reyes
+ * @version 1.0
+ */
 public class Tablero extends AppCompatActivity {
-
+    /** Tabla en la que se muestran los comunicados. */
     private TableLayout tabla;
+    /** Botón para ordenar, guardar  los comunicados y regresr al menu principal. */
     private Button btnOrdenar, btnGuardar, btnVolver;
+    /** Lista de objetos {@link Comunicado} cargados desde archivo. */
     private List<Comunicado> comunicados = new ArrayList<>();
-
+    /**
+     * Método que se ejecuta al crear la actividad.
+     * Inicializa los componentes, carga los comunicados desde archivo
+     * y muestra los datos en la tabla.
+     *
+     * @param savedInstanceState Estado guardado de la actividad.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +77,17 @@ public class Tablero extends AppCompatActivity {
             finish();
         });
     }
-
+    /**
+     * Carga los comunicados almacenados en el archivo {@code comunicados.txt}
+     * y los convierte en objetos {@link Comunicado}, que se agregan a la lista.
+     *
+     * <p>El formato esperado en cada línea es:
+     * <ul>
+     *     <li>Evento: id, tipo, área, título, audiencia, descripción, imagen, lugar, fecha</li>
+     *     <li>Anuncio: id, tipo, área, título, audiencia, descripción, imagen, urgencia</li>
+     * </ul>
+     * </p>
+     */
     private void cargarComunicados() {
         comunicados.clear();
         try (FileInputStream fis = openFileInput("comunicados.txt");
@@ -86,6 +118,11 @@ public class Tablero extends AppCompatActivity {
         }
     }
 
+    /**
+     * Muestra en la tabla los comunicados cargados.
+     * La tabla tiene una cabecera con títulos de columna y una fila por cada comunicado,
+     * mostrando el título y la fecha (si corresponde).
+     */
     private void mostrarComunicados() {
         tabla.removeAllViews();
 
@@ -127,7 +164,10 @@ public class Tablero extends AppCompatActivity {
             tabla.addView(fila);
         }
     }
-
+    /**
+     * Guarda la lista de comunicados en un archivo serializado (.dat),
+     * nombrado con la fecha actual en formato {@code comunicados_dd_MM_yyyy.dat}.
+     */
     private void guardarSerializado() {
         try {
             String fecha = new SimpleDateFormat("dd_MM_yyyy", Locale.getDefault()).format(new Date());
@@ -136,6 +176,7 @@ public class Tablero extends AppCompatActivity {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(new ArrayList<>(comunicados));
             oos.close();
+            Toast.makeText(this, "Archivo guardado correctamente", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

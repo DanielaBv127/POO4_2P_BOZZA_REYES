@@ -6,12 +6,33 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * {@code MenuActivity} representa la pantalla principal del menú en la aplicación.
+ *
+ * <p>Desde esta actividad el usuario puede acceder a diferentes secciones:</p>
+ * <ul>
+ *   <li>{@link VerComunicados}: Permite visualizar los comunicados.</li>
+ *   <li>{@link PublicarComunicados}: Permite publicar nuevos comunicados.</li>
+ *   <li>{@link Tablero}: Muestra el tablero principal con opciones adicionales.</li>
+ * </ul>
+ *
+ * <p>Cada opción se activa a través de un botón en la interfaz.</p>
+ *
+ * @author Daniela Bozza
+ * @version 1.0
+ * @since 2025-09-04
+ */
 public class MenuActivity extends AppCompatActivity {
     private Button btnVerComunicados;
     private Button btnPublicar;
     private Button btnTablero;
-
+    /**
+     * Método llamado al crear la actividad.
+     * Configura la interfaz y define las acciones de los botones
+     * para abrir las actividades correspondientes.
+     *
+     * @param savedInstanceState Estado guardado de la actividad (si existe)
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);

@@ -43,7 +43,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
+            android:layout_height="48dp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:text="User" />
+            android:hint="User" />
 
         <Space
             android:layout_width="match_parent"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:text="Password" />
+            android:hint="Password" />
 
         <Space
             android:layout_width="match_parent"
@@ -96,6 +96,7 @@
             android:backgroundTint="#E63692"
             android:fontFamily="@font/balsamiq_sans_bold"
             android:text="Iniciar Sesión"
-            android:textColorLink="@color/black" />
+            android:textSize="17sp"
+            app:rippleColor="#6430F2" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

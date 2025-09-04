@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="10dp"
@@ -34,11 +34,11 @@
             android:id="@+id/spinnerFechas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="564dp">
+            android:layout_height="597dp">
 
             <LinearLayout
                 android:id="@+id/layoutComunicados"
@@ -54,9 +54,9 @@
             android:backgroundTint="#E63692"
             android:fontFamily="@font/balsamiq_sans_bold"
             android:text="Volver"
+            android:textSize="17sp"
             android:textColor="#FFFFFF"
-            android:textColorHighlight="#E63692"
-            android:textColorHint="#E63692"
-            android:textColorLink="#E63692" />
+            app:rippleColor="#6430F2"
+            android:textColorHint="#E63692"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

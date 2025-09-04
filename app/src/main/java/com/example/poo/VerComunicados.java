@@ -1,5 +1,4 @@
 package com.example.poo;
-
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,14 +22,38 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * La clase {@code VerComunicados} muestra los comunicados almacenados en la aplicación.
+ * <p>Permite al usuario:</p>
+ * <ul>
+ *   <li>Visualizar todos los comunicados en forma de tarjetas (título, imagen, descripción).</li>
+ *   <li>Filtrar los comunicados de tipo evento por fecha usando un {@link Spinner}.</li>
+ *   <li>Volver al menú principal.</li>
+ * </ul>
+ *
+ * <p>Los comunicados se leen del archivo {@code comunicados.txt},
+ * previamente creado en la actividad {@link PublicarComunicados}.</p>
+ *
+ * @author Daniela Bozza
+ * @version 1.0
+ */
 public class VerComunicados extends AppCompatActivity {
+    /** Contenedor donde se añaden las tarjetas con los comunicados. */
     private LinearLayout layoutComunicados;
+    /** Botón para volver al menú principal. */
     private Button btnVolver;
+    /** Spinner que permite filtrar eventos por fecha. */
     private Spinner spinnerFechas;
-
+    /** Lista con los comunicados cargados desde archivo. */
     private List<Comunicado> comunicados= new ArrayList<>();
 
+    /**
+     * Método que se ejecuta al crear la actividad.
+     * Inicializa los componentes de la interfaz, carga los comunicados
+     * desde archivo y muestra las opciones de filtrado por fecha.
+     *
+     * @param savedInstanceState Estado guardado de la actividad.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +86,15 @@ public class VerComunicados extends AppCompatActivity {
 
         btnVolver.setOnClickListener(v -> finish());
     }
-
+    /**
+     * Carga los comunicados almacenados en el archivo {@code comunicados.txt}
+     * y los convierte en objetos {@link Comunicado}.
+     * <p>El formato esperado por línea es:</p>
+     * <ul>
+     *   <li>Evento: id, tipo, área, título, audiencia, descripción, imagen, lugar, fecha</li>
+     *   <li>Anuncio: id, tipo, área, título, audiencia, descripción, imagen, urgencia</li>
+     * </ul>
+     */
     private void cargarComunicados() {
         comunicados.clear();
         try (FileInputStream fis = openFileInput("comunicados.txt");
@@ -93,7 +124,10 @@ public class VerComunicados extends AppCompatActivity {
             Toast.makeText(this, "No se encontraron comunicados", Toast.LENGTH_SHORT).show();
         }
     }
-
+    /**
+     * Carga en el {@link Spinner} las fechas disponibles de los comunicados
+     * de tipo evento. Se añade siempre la opción "Todos" para mostrar sin filtro.
+     */
     private void cargarFechas(){
         List<String> opciones= new ArrayList<>();
         opciones.add("Todos");
@@ -110,14 +144,25 @@ public class VerComunicados extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFechas.setAdapter(adapter);
     }
-
+    /**
+     * Muestra los comunicados en la interfaz como tarjetas que incluyen:
+     * título, imagen y descripción.
+     *
+     * @param lista Lista de comunicados a mostrar.
+     */
     private void mostrarComunicados(List<Comunicado> lista){
         layoutComunicados.removeAllViews();
         for (Comunicado c: lista){
             agregarCard(c.getTitulo(), c.getDescripcion(),c.getImagen());
         }
     }
-
+    /**
+     * Filtra los comunicados de tipo evento por una fecha específica
+     * y los muestra en la interfaz. Si no se encuentran resultados,
+     * muestra un mensaje informativo.
+     *
+     * @param fecha Fecha seleccionada para el filtrado.
+     */
     private void filtrarPorFecha(String fecha){
         List<Comunicado> filtrados= new ArrayList<>();
         for (Comunicado c: comunicados){
@@ -138,7 +183,14 @@ public class VerComunicados extends AppCompatActivity {
         mostrarComunicados(filtrados);
         }
     }
-
+    /**
+     * Crea una tarjeta visual con el título, la imagen y la descripción
+     * de un comunicado, y la añade al contenedor principal.
+     *
+     * @param titulo       Título del comunicado.
+     * @param descripcion  Descripción del comunicado.
+     * @param nombreImagen Ruta o URI de la imagen asociada.
+     */
     private void agregarCard(String titulo, String descripcion, String nombreImagen){
         LinearLayout card= new LinearLayout(this);
         card.setOrientation(LinearLayout.VERTICAL);

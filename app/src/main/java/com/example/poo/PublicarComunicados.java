@@ -7,7 +7,23 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+/**
+ * {@code PublicarComunicados} permite a los usuarios crear y publicar nuevos comunicados
+ * dentro de la aplicación.
+ *
+ * <p>Los comunicados pueden ser de dos tipos:</p>
+ * <ul>
+ *   <li><b>Evento:</b> requiere información adicional como lugar y fecha.</li>
+ *   <li><b>Anuncio:</b> requiere especificar un nivel de urgencia.</li>
+ * </ul>
+ *
+ * <p>Los datos se guardan en un archivo de texto interno ({@code comunicados.txt}).</p>
+ *
+ * <p>El usuario también puede seleccionar una imagen para asociarla al comunicado.</p>
+ *
+ * @author Paola Reyes
+ * @version 1.0
+ */
 public class PublicarComunicados extends AppCompatActivity {
     private RadioGroup rgTipo;
     private RadioButton rbEvento, rbAnuncio;
@@ -19,6 +35,16 @@ public class PublicarComunicados extends AppCompatActivity {
     private Button btnPublicar, btnVolver, btnSeleccionarImagen;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imagenUri;
+    /**
+     * Inicializa la interfaz y configura los eventos de los botones:
+     * <ul>
+     *   <li><b>Publicar:</b> guarda un nuevo comunicado.</li>
+     *   <li><b>Volver:</b> regresa al menú principal.</li>
+     *   <li><b>Seleccionar Imagen:</b> abre un selector de imágenes.</li>
+     * </ul>
+     *
+     * @param savedInstanceState Estado guardado de la actividad (si existe)
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +68,7 @@ public class PublicarComunicados extends AppCompatActivity {
         btnPublicar = findViewById(R.id.btnPublicar);
         btnVolver = findViewById(R.id.btnVolver);
         btnSeleccionarImagen = findViewById(R.id.btnSeleccionarImagen);
+        // Alterna visibilidad de secciones según tipo seleccionado
         rgTipo.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rbEvento) {
                 layoutEvento.setVisibility(View.VISIBLE);
@@ -51,6 +78,7 @@ public class PublicarComunicados extends AppCompatActivity {
                 layoutAnuncio.setVisibility(View.VISIBLE);
             }
         });
+        // Publicar comunicado
         btnPublicar.setOnClickListener(v -> {
             try {
                 guardarComunicado();
@@ -61,12 +89,12 @@ public class PublicarComunicados extends AppCompatActivity {
                 Toast.makeText(this, "Error guardando comunicado", Toast.LENGTH_SHORT).show();
             }
         });
-
+        // Volver al menú principal
         btnVolver.setOnClickListener(v -> {
             startActivity(new Intent(this, MenuActivity.class));
             finish();
         });
-
+        // Seleccionar imagen desde almacenamiento
         btnSeleccionarImagen.setOnClickListener(v -> {
             Intent intent= new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.setType("image/*");
@@ -76,7 +104,13 @@ public class PublicarComunicados extends AppCompatActivity {
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
         });
     }
-
+    /**
+     * Maneja el resultado de la selección de una imagen.
+     *
+     * @param requestCode Código de la solicitud
+     * @param resultCode  Resultado de la actividad
+     * @param data        Datos devueltos (incluye la URI de la imagen seleccionada)
+     */
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -88,7 +122,15 @@ public class PublicarComunicados extends AppCompatActivity {
                 }
             }
         }
-
+    /**
+     * Guarda el comunicado validando los datos ingresados.
+     *
+     * <p>Dependiendo del tipo (evento o anuncio), se requiere información adicional
+     * como lugar, fecha o urgencia.</p>
+     *
+     * @throws DatosIncompletosException Si faltan datos obligatorios
+     * @throws IOException Si ocurre un error al escribir en el archivo
+     */
     private void guardarComunicado() throws DatosIncompletosException, IOException {
         String tipo = rbEvento.isChecked() ? "evento" : rbAnuncio.isChecked() ? "anuncio" : "";
         String area = spArea.getSelectedItem() != null ? spArea.getSelectedItem().toString() : "";
@@ -120,7 +162,11 @@ public class PublicarComunicados extends AppCompatActivity {
         fos.write(linea.getBytes());
         fos.close();
     }
-
+    /**
+     * Construye la cadena con la audiencia seleccionada a partir de los checkboxes.
+     *
+     * @return Texto con los grupos seleccionados (separados por punto y coma)
+     */
     private String obtenerAudiencia() {
         StringBuilder sb = new StringBuilder();
         if (cbEstudiantes.isChecked()) {
@@ -131,6 +177,12 @@ public class PublicarComunicados extends AppCompatActivity {
         if (sb.length() > 0) sb.setLength(sb.length() - 1);
         return sb.toString();
     }
+
+    /**
+     * Genera un identificador aleatorio para el comunicado.
+     *
+     * @return Número entero entre 1 y 1000
+     */
     private int generarId() {
         return (int) (Math.random() * 1000) + 1;
     }
